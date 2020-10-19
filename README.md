@@ -2,11 +2,11 @@
 
 TwitGrid is a simple, broadsheet layout for reading Twitter feeds that shows a
 dense, instant overview of the latest posts from only the users you care about.
-It doesn't mix multiple feeds up into a infinite-scrolling jumble.
+It doesn't mix multiple feeds up into an infinite-scrolling jumble.
 
 It's easy to use:
 
-1. Save a copy of `twitgrid.html` anywhere.
+1. Save a copy of [`twitgrid.html`](https://github.com/nuket/TwitGrid/blob/master/twitgrid.html) anywhere.
 
 2. Edit the lists of Twitter handles you want to see:
 
