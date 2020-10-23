@@ -23,8 +23,20 @@ It's easy to use:
    ```
 
 4. Reload the page and enjoy.
-5. Page Up / Down will smooth scroll the whole viewport, snapping to the next set of feeds.
-   Or you can drill down into individual user feeds.
+
+5. **Desktops**
+
+   *Page Up / Down* will smooth scroll the whole viewport, snapping to the next set of feeds.  
+   *Mouse Wheel Up / Down* scrolls the individual user feeds.  
+   *Home / End* scrolls to the top / bottom, as expected.
+
+   **Mobile**
+
+   Tap the navigation buttons to flip pages, or drag individual feeds.
+
+## Live Demo
+
+See a live demo version here -- https://vilimpoc.org/research/TwitGrid/
 
 ## The View
 
@@ -40,7 +52,8 @@ actually see or surfacing things it thinks you might be interested in.
 
 ## Technology
 
-It's a single page, no dependencies, pure ES6 Javascript. Not even `lodash`.
+It's a single page with inlined SVGs, no dependencies, pure ES6 Javascript. Not
+even `lodash`. 
 
 ## Styling: Changing the Column Count
 
