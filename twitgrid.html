@@ -61,9 +61,20 @@
 		right: 3vw;
 	}
 
-	#pagingButtons .button {
-		width: 15vw;
-		margin: 1vw;
+	@media (orientation: landscape) {
+		#pagingButtons .button {
+			min-width: 6rem;
+			width:     6vw;
+			margin:    1rem;
+		}
+	}
+
+	@media (orientation: portrait) {
+		#pagingButtons .button {
+			min-width: 6rem;
+			width:     8vh;
+			margin:    1rem;
+		}
 	}
 
 	@keyframes fadeIn {
