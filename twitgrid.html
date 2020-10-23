@@ -45,7 +45,7 @@
 	body {
 		height: 100%;
 		width: 100%;
-		overflow: auto;
+		overflow: hidden;
 	}
 
 	body  { scroll-snap-type: y mandatory; background-color: rgb(41, 47, 51); }
@@ -118,9 +118,6 @@
 		// Change this to suit the width of your monitor.
 		const columnCount = 5;
 
-		const handlesTopInterests = 'vilimpoc anandwrites checklyhq GreatDismal tim_nolet';
-		const handlesFunStuff     = 'BVG_Kampagne fryuppolice KoreanTravel thingiverse NI_News steak_umm ConanOBrien taylorswift13 jimmykimmel';
-
 		let pageCount = 0;
 
 		const makePage = twits => {
@@ -178,24 +175,80 @@
 			});
 		};
 
+		// https://dev.to/timhuang/a-simple-way-to-detect-if-browser-is-on-a-mobile-device-with-javascript-44j3
+		// Need to do things a little different when on mobile.
+
+		// const isMobile = () => {
+		// 	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		// 		// true for mobile device
+		// 		console.log("mobile device");
+		// 		true;
+		// 	} else {
+		// 		// false for not mobile device
+		// 		console.log("not mobile device");
+		// 		false;
+		// 	}
+		// }
+
+		// isMobile();
+
 		// https://stackoverflow.com/a/15203639
+		// Getting some weird readings on mobile with this method.
+
+		// Scrolling is different. 
+		// window.scrollY == 0 forever for some reason.
+
+		// Ahh, now I understand. On mobile, it acts as though overflow: hidden; and doesn't
+		// show a scrollbar for the document itself.
+
+		// So 'top' actually decreases from 0 -> negative values as you "scroll" down.
+
+		// Here's desktop:
+		// document.getElementById('page-0').getBoundingClientRect()
+		// DOMRect {x: 0, y: 0, width: 1050, height: 1607, top: 0, …}
+		// document.getElementById('page-1').getBoundingClientRect()
+		// DOMRect {x: 0, y: 1607, width: 1050, height: 1607, top: 1607, …}
+		// document.getElementById('page-2').getBoundingClientRect()
+		// DOMRect {x: 0, y: 3214, width: 1050, height: 1607, top: 3214, …}
+
+		// Here's mobile:
+		// document.getElementById('page-0').getBoundingClientRect()
+		// DOMRect {x: 0, y: -1569.1429443359375, width: 979.8095703125, height: 1569.3035888671875, top: -1569.1429443359375, …}
+		// document.getElementById('page-1').getBoundingClientRect()
+		// DOMRect {x: 0, y: 0.1607142835855484, width: 979.8095703125, height: 1569.3035888671875, top: 0.1607142835855484, …}
+		// document.getElementById('page-2').getBoundingClientRect()
+		// DOMRect {x: 0, y: 1569.46435546875, width: 979.8095703125, height: 1569.3035888671875, top: 1569.46435546875, …}
+
+		// Ok, I get it now.
+
+		// const isInViewport = el => {
+		// 	const { top, bottom } = el.getBoundingClientRect();
+		// 	const vHeight = (window.innerHeight || document.documentElement.clientHeight);
+
+		// 	console.log(`window.innerHeight: ${window.innerHeight}`);
+		// 	console.log(`document.documentElement.clientHeight: ${document.documentElement.clientHeight}`);
+
+		// 	console.log(`top: ${top}`);
+		// 	console.log(`bottom: ${bottom}`);
+		// 	console.log(`vHeight: ${vHeight}`);
+
+		// 	const visible = ((top > 0 || bottom > 0) && top < vHeight);
+		// 	console.log(`visible: ${visible}, ${el.getAttribute('id')}`);
+
+		// 	return visible;
+		// };
 
 		const isInViewport = el => {
-			const { top, bottom } = el.getBoundingClientRect();
-			const vHeight = (window.innerHeight || document.documentElement.clientHeight);
+			const { top } = el.getBoundingClientRect();
 
-			console.log(`window.innerHeight: ${window.innerHeight}`);
-			console.log(`document.documentElement.clientHeight: ${document.documentElement.clientHeight}`);
+			// The pixel precision on mobile leads to occasional floating-point weirdness
+			// in positioning.
 
-			console.log(`top: ${top}`);
-			console.log(`bottom: ${bottom}`);
-			console.log(`vHeight: ${vHeight}`);
-
-			const visible = ((top > 0 || bottom > 0) && top < vHeight);
-			console.log(`visible: ${visible}`);
+			const visible = (-10.0 < top && top < 10.0);
+			console.log(`visible: ${visible}, ${el.getAttribute('id')}`);
 
 			return visible;
-		};
+		}
 
 		// .scrollTo / .scrollIntoView do not work on Android.
 
@@ -221,7 +274,7 @@
 				page++;
 			}
 
-			console.log(page);
+			// console.log(page);
 
 			if (page > 0) {
 				let newPage = page - 1;
@@ -232,8 +285,8 @@
 				// Also doesn't fix the issue:
 				// https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome
 				// setTimeout(() => { el.scrollIntoView({ behavior: "smooth" }) });
-
-
+				
+				el.scrollIntoView({ behavior: "smooth" });
 			}
 		};
 
@@ -248,20 +301,26 @@
 				page++;
 			}
 
-			console.log(page);
+			// console.log(page);
 
 			if (page < pageCount - 1) {
 				let newPage = page + 1;
 				let el = document.getElementById(`page-${newPage}`);
 
 				console.log(el);
-				// el.scrollIntoView({ behavior: "smooth" });
-				setTimeout(() => { el.scrollIntoView({ behavior: "smooth" }) });
+				// setTimeout(() => { el.scrollIntoView({ behavior: "smooth" }) });
+
+				el.scrollIntoView({ behavior: "smooth" });
 			}
 		};
 
-		render(handlesTopInterests);
-		render(handlesFunStuff, true);
+		(() => {
+			const handlesTopInterests = 'vilimpoc anandwrites checklyhq GreatDismal tim_nolet';
+			const handlesFunStuff     = 'BVG_Kampagne fryuppolice KoreanTravel thingiverse NI_News steak_umm ConanOBrien taylorswift13 jimmykimmel';
+
+			render(handlesTopInterests);
+			render(handlesFunStuff, true);
+		})();
 	</script>
 	<script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 	<noscript>
