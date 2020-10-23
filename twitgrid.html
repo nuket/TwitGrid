@@ -55,6 +55,26 @@
 	.twits { display: flex; flex-direction: row; }
 	.twit  { flex: 0 0 20%; }
 
+	#pagingButtons {
+		position: fixed;
+		bottom: 2vw;
+		right: 3vw;
+	}
+
+	#pagingButtons .button {
+		width: 15vw;
+		margin: 1vw;
+	}
+
+	@keyframes fadeIn {
+		0%   { filter: brightness(1); }
+		100% { filter: brightness(1.5); }
+	}
+
+	#pagingButtons .button:hover {
+		animation: fadeIn 0.5s ease-in forwards;
+	}
+
 	/* https://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/ */
 	.max-w-lg      { max-width: 32rem; }
 	.self-start    { align-self: flex-start; }
@@ -101,9 +121,14 @@
 		const handlesTopInterests = 'vilimpoc anandwrites checklyhq GreatDismal tim_nolet';
 		const handlesFunStuff     = 'BVG_Kampagne fryuppolice KoreanTravel thingiverse NI_News steak_umm ConanOBrien taylorswift13 jimmykimmel';
 
+		let pageCount = 0;
+
 		const makePage = twits => {
 			const d = document.createElement('div');
 			d.setAttribute('class', 'page');
+			d.setAttribute('id', `page-${pageCount}`);
+
+			pageCount++;
 
 			const t = document.createElement('div');
 			t.setAttribute('class', 'twits');
@@ -144,14 +169,96 @@
 			const twits  = h.map(makeTwit);
 			const chunks = chunk(twits, columns);
 
-			console.log(h);
-			console.log(twits);
-			console.log(chunks);
+			// console.log(h);
+			// console.log(twits);
+			// console.log(chunks);
 
 			chunks.forEach(e => {
 				node.appendChild(makePage(e));
 			});
-		}
+		};
+
+		// https://stackoverflow.com/a/15203639
+
+		const isInViewport = el => {
+			const { top, bottom } = el.getBoundingClientRect();
+			const vHeight = (window.innerHeight || document.documentElement.clientHeight);
+
+			console.log(`window.innerHeight: ${window.innerHeight}`);
+			console.log(`document.documentElement.clientHeight: ${document.documentElement.clientHeight}`);
+
+			console.log(`top: ${top}`);
+			console.log(`bottom: ${bottom}`);
+			console.log(`vHeight: ${vHeight}`);
+
+			const visible = ((top > 0 || bottom > 0) && top < vHeight);
+			console.log(`visible: ${visible}`);
+
+			return visible;
+		};
+
+		// .scrollTo / .scrollIntoView do not work on Android.
+
+		// None of these worksarounds work with Chromium on Android.
+		// https://support.google.com/chrome/thread/46920886?hl=en
+
+		// const scrollTo = el => {
+		// 	const { top, bottom } = el.getBoundingClientRect();
+		// 	window.scrollTo(0, top);
+		// }
+
+		// .scrollIntoView does NOT WORK on mobile phones.
+
+		const clickedUp = e => {
+			// Figure out which of the pages is currently in view.
+			// Go to previous.
+
+			let page = 0;
+
+			for ( ; page < pageCount; ) {
+				// console.log(`page: ${page}`);
+				if (isInViewport(document.getElementById(`page-${page}`))) break;
+				page++;
+			}
+
+			console.log(page);
+
+			if (page > 0) {
+				let newPage = page - 1;
+				let el = document.getElementById(`page-${newPage}`);
+				
+				console.log(el);
+
+				// Also doesn't fix the issue:
+				// https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome
+				// setTimeout(() => { el.scrollIntoView({ behavior: "smooth" }) });
+
+
+			}
+		};
+
+		const clickedDown = e => {
+			// Figure out which of the pages is currently in view.
+			// Go to next.
+
+			let page = 0;
+
+			for ( ; page < pageCount; ) {
+				if (isInViewport(document.getElementById(`page-${page}`))) break;
+				page++;
+			}
+
+			console.log(page);
+
+			if (page < pageCount - 1) {
+				let newPage = page + 1;
+				let el = document.getElementById(`page-${newPage}`);
+
+				console.log(el);
+				// el.scrollIntoView({ behavior: "smooth" });
+				setTimeout(() => { el.scrollIntoView({ behavior: "smooth" }) });
+			}
+		};
 
 		render(handlesTopInterests);
 		render(handlesFunStuff, true);
@@ -168,5 +275,32 @@
 			<div class="max-w-lg self-end"></div>
 		</div>
 	</noscript>
+	<div id="pagingButtons">
+		<!-- https://css-tricks.com/forums/topic/how-to-make-an-svg-fit-to-the-parent-container-100/#post-159784 -->
+		<div class="button" onclick="clickedUp()">
+			<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+				xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+				xmlns="http://www.w3.org/2000/svg" id="svg8" version="1.1" viewBox="0 0 39.6875 39.6875">
+				<g transform="translate(-57.235313,-56.668976)" id="layer1">
+					<circle r="19.84375" cy="76.512726" cx="77.079063" id="path836"
+						style="fill:#ffdc81;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:49.28266144;stroke-opacity:1;paint-order:normal" />
+					<path id="path826-3" d="M 64.869589,83.272279 77.07906,71.062809 89.288537,83.272279"
+						style="fill:none;stroke:#643100;stroke-width:3.4395833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+				</g>
+			</svg>
+		</div>
+		<div class="button" onclick="clickedDown()">
+			<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+				xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+				xmlns="http://www.w3.org/2000/svg" id="svg8" version="1.1" viewBox="0 0 39.6875 39.6875">
+				<g transform="translate(-57.235313,-56.668976)" id="layer1">
+					<circle r="19.84375" cy="76.512726" cx="77.079063" id="path836-7"
+						style="fill:#ffdc81;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:49.28266144;stroke-opacity:1;paint-order:normal" />
+					<path id="path826-3-1" d="m 64.86959,70.811518 12.20948,12.20947 12.20947,-12.20947"
+						style="fill:none;stroke:#643100;stroke-width:3.4395833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+				</g>
+			</svg>
+		</div>
+	</div>
 </body>
 </html>
