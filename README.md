@@ -6,6 +6,16 @@ It doesn't mix multiple feeds up into an infinite-scrolling jumble.
 
 It's easy to use:
 
+1. Specify the handles you want as part of the URL fragment:
+
+   ```
+   https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimpoc,checklyhq,dspillere,gusso,GreatDismal,tim_nolet;users_sorted=BVG_Kampagne,fryuppolice,KoreanTravel,thingiverse,NI_News,steak_umm,ConanOBrien,taylorswift13,jimmykimmel
+   ```
+
+2. This is bookmarkable.
+
+Or, if you want a local hard-coded version:
+
 1. Save a copy of [`twitgrid.html`](https://raw.githubusercontent.com/nuket/TwitGrid/master/twitgrid.html) anywhere.
 
 2. Edit the lists of Twitter handles you want to see:
@@ -24,19 +34,21 @@ It's easy to use:
 
 4. Reload the page and enjoy.
 
-5. **Desktops**
+## Page Navigation
 
-   *Page Up / Down* will smooth scroll the whole viewport, snapping to the next set of feeds.  
-   *Mouse Wheel Up / Down* scrolls the individual user feeds.  
-   *Home / End* scrolls to the top / bottom, as expected.
+**Desktops**
 
-   **Mobile**
+*Page Up / Down* will smooth scroll the whole viewport, snapping to the next set of feeds.  
+*Mouse Wheel Up / Down* scrolls the individual user feeds.  
+*Home / End* scrolls to the top / bottom, as expected.
 
-   Tap the navigation buttons to flip pages, or drag individual feeds.
+**Mobile**
+
+Tap the navigation buttons to flip pages, or drag individual feeds.
 
 ## Live Demo
 
-See a live demo version here -- https://vilimpoc.org/research/TwitGrid/
+See a [live demo version here](https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimpoc,checklyhq,dspillere,gusso,GreatDismal,tim_nolet;users_sorted=BVG_Kampagne,fryuppolice,KoreanTravel,thingiverse,NI_News,steak_umm,ConanOBrien,taylorswift13,jimmykimmel) (this link leaves GitHub).
 
 ## The View
 
