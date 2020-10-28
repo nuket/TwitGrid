@@ -68,7 +68,7 @@ See a [demo here](https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimp
 
 ## Video Explainer
 
-[![Watch the video](https://img.youtube.com/vi/Az-LVfUuzHo/maxresdefault.jpg)](https://youtu.be/Az-LVfUuzHo)
+[![Watch the video](https://img.youtube.com/vi/S8JrmXg0BNo/maxresdefault.jpg)](https://youtu.be/S8JrmXg0BNo)
 
 ## Technology
 
