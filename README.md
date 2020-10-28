@@ -66,6 +66,10 @@ Tap the navigation buttons to flip pages, or drag individual feeds.
 
 See a [demo here](https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimpoc,checklyhq,dspillere,gusso,GreatDismal,tim_nolet;users_sorted=BVG_Kampagne,fryuppolice,KoreanTravel,thingiverse,NI_News,steak_umm,ConanOBrien,taylorswift13,jimmykimmel) (this link leaves GitHub).
 
+## Video Explainer
+
+[![Watch the video](https://img.youtube.com/vi/Az-LVfUuzHo/maxresdefault.jpg)](https://youtu.be/Az-LVfUuzHo)
+
 ## Technology
 
 It's a single page with inlined SVGs, no dependencies, pure ES6 Javascript. Not
