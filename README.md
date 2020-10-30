@@ -23,7 +23,7 @@ URL Fragment
 1. Specify the handles you want as part of the URL fragment:
 
    ```
-   https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimpoc,checklyhq,dspillere,gusso,GreatDismal,tim_nolet;users_sorted=BVG_Kampagne,fryuppolice,KoreanTravel,thingiverse,NI_News,steak_umm,ConanOBrien,taylorswift13,jimmykimmel
+   https://vilimpoc.org/research/TwitGrid/#columns=8;users=vilimpoc,checklyhq,dspillere,gusso,GreatDismal,tim_nolet,mihriminaz,FaberCastell;users_sorted=BVG_Kampagne,fryuppolice,KoreanTravel,thingiverse,NI_News,steak_umm,ConanOBrien,taylorswift13
    ```
 
    This is bookmarkable.
